@@ -1,4 +1,4 @@
-#include "..\include\UnopToken.h"
+#include "../include/UnopToken.h"
 
 
 UnopToken::UnopToken(std::string lexeme):

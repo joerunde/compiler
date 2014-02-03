@@ -1,5 +1,5 @@
-#include "..\include\IDToken.h"
-#include "..\include\KeywordToken.h"
+#include "../include/IDToken.h"
+#include "../include/KeywordToken.h"
 
 IDToken::IDToken(std::string lexeme):
 	Token(lexeme)

@@ -1,4 +1,4 @@
-#include "..\include\Token.h"
+#include "../include/Token.h"
 #include <iostream>
 
 Token::Token(std::string lexeme):

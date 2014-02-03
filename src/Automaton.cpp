@@ -1,4 +1,4 @@
-#include "..\include\Automaton.h"
+#include "../include/Automaton.h"
 
 
 Automaton::Automaton(tStateMap states, tTransitionMap transitions, std::set<int> acceptStates):

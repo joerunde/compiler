@@ -1,4 +1,4 @@
-#include "..\include\BoolToken.h"
+#include "../include/BoolToken.h"
 
 
 BoolToken::BoolToken(std::string lexeme):

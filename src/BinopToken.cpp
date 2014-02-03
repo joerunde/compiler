@@ -1,4 +1,4 @@
-#include "..\include\BinopToken.h"
+#include "../include/BinopToken.h"
 
 
 BinopToken::BinopToken(std::string lexeme):

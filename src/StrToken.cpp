@@ -1,4 +1,4 @@
-#include "..\include\StrToken.h"
+#include "../include/StrToken.h"
 
 
 StrToken::StrToken(std::string lexeme):

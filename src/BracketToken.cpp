@@ -1,4 +1,4 @@
-#include "..\include\BracketToken.h"
+#include "../include/BracketToken.h"
 
 
 BracketToken::BracketToken(std::string lexeme):

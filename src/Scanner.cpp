@@ -1,5 +1,5 @@
-#include "..\include\Scanner.h"
-#include "..\include\Tokens.h"
+#include "../include/Scanner.h"
+#include "../include/Tokens.h"
 #include <iostream>
 
 Scanner::Scanner(void):
@@ -64,7 +64,7 @@ std::vector<Token*> Scanner::ScanFile(std::string filename)
 			}
 		}
 
-		if(mChar == ' ' && mCurrentLexeme.size() == 0)
+        if((mChar == ' ' || mChar == 9) && mCurrentLexeme.size() == 0)
 		{
 			//if this is a space and nothing was lexing, throw it away
 			mFile.get();

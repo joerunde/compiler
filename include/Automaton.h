@@ -9,8 +9,8 @@
 
 
 
-typedef std::map<int, std::set<char>> tStateMap;
-typedef std::map<int, std::map<char, int>> tTransitionMap;
+typedef std::map<int, std::set<char> > tStateMap;
+typedef std::map<int, std::map<char, int> > tTransitionMap;
 
 class Automaton
 {

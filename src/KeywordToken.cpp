@@ -1,4 +1,4 @@
-#include "..\include\KeywordToken.h"
+#include "../include/KeywordToken.h"
 
 
 std::set<std::string> KeywordToken::sKeywordSymbols = KeywordToken::sInitializeSymbols();

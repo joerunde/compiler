@@ -1,4 +1,4 @@
-#include "..\include\IntegerToken.h"
+#include "../include/IntegerToken.h"
 
 
 IntegerToken::IntegerToken(std::string lexeme):

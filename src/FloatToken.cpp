@@ -1,4 +1,4 @@
-#include "..\include\FloatToken.h"
+#include "../include/FloatToken.h"
 
 
 FloatToken::FloatToken(std::string lexeme):

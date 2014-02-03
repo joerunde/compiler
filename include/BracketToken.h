@@ -1,5 +1,5 @@
 #pragma once
-#include "token.h"
+#include "Token.h"
 class BracketToken :
 	public Token
 {
