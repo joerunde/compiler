@@ -2,7 +2,7 @@
 # INSTRUCTION
 # Quoted strings are to be filled in by student
 #
-CCC = g++
+CCC = clang
 CCFLAGS =
 OBJS = Automaton.o BinopToken.o BoolToken.o BracketToken.o FloatToken.o IDToken.o IntegerToken.o KeywordToken.o main.o Scanner.o StrToken.o Token.o UnopToken.o
 SOURCE = src/Automaton.cpp src/BinopToken.cpp src/BoolToken.cpp src/BracketToken.cpp src/FloatToken.cpp src/IDToken.cpp src/IntegerToken.cpp src/KeywordToken.cpp src/main.cpp src/Scanner.cpp src/StrToken.cpp src/Token.cpp src/UnopToken.cpp
