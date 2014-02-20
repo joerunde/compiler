@@ -20,7 +20,6 @@ clean:
 	ls
 
 stutest.out: compiler
-	cat stutest1.in
 	-./compiler $(RUNFLAGS) $(TESTFLAGS) > stutest1.out
 	cat stutest1.out
 
