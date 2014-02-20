@@ -1,0 +1,1 @@
+[ [while [!= x 7] [sin x] [cos x] [:= x 7] ] ]

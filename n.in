@@ -1,0 +1,1 @@
+[ [if [or x y] 5] [if [and y x] 5 6] ]

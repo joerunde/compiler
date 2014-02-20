@@ -1,0 +1,1 @@
+[ [+ x y] [- 5 7] [* 5.2 3.4] [/ 6 3] [^ 2 3] [% 10 7] [and true true] [or true false] [sin x] [cos y] [tan z] ]
