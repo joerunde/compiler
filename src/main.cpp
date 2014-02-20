@@ -15,17 +15,26 @@ int main(int argc, char **argv)
 	parser.SetScanner(&scanner);
 	parser.SetSymbolTable(table);
 
-	//uncomment for user to type in files
+	int c = 1;
 	std::string s;
 	do
 	{
-		std::cout << "\nFile: ";
-		std::getline(std::cin, s);
+		if(c < argc)
+		{
+			s = argv[c];
+		}
+		else
+		{
+			std::cout << "\nFile: ";
+			std::getline(std::cin, s);
+		}
 
 		if(!scanner.OpenFile(s))
 			continue;
 
 		parser.Parse();
+
+		//print tokens from scanner
 		/*Token* temp;
 		while((temp = scanner.GetNextToken()) != 0)
 		{
@@ -35,13 +44,12 @@ int main(int argc, char **argv)
 
 		scanner.CloseFile();
 
+		//print symbol table
 		//table->print();
 
 		table->clearTables();
 	}while(s != std::string("quit"));
 
-	//std::string f = argv[1];
-	//scanner.ScanFile(f);
 
 	return 0;
 }

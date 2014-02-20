@@ -3,6 +3,7 @@
 #include "../include/Tokens.h"
 #include "../include/Scanner.h"
 #include <iostream>
+#include <typeinfo>
 
 Parser::Parser(void)
 {
