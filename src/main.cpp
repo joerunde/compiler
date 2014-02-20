@@ -22,6 +22,7 @@ int main(int argc, char **argv)
 		if(c < argc)
 		{
 			s = argv[c];
+			c++;
 		}
 		else
 		{
