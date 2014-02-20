@@ -1,8 +1,11 @@
 #pragma once
 #include <string>
 #include <fstream>
-#include "Token.h"
 #include <vector>
+#include "Automaton.h"
+
+class SymbolTable;
+class Token;
 
 class Scanner
 {
@@ -10,35 +13,28 @@ public:
 	Scanner(void);
 	~Scanner(void);
 
-	std::vector<Token*> ScanFile(std::string filename);
+	bool OpenFile(std::string filename);
+	Token* GetNextToken();
+	Token* PeekOneToken();
+	Token* PeekTwoTokens();
+	void CloseFile();
+
+	void setTable(SymbolTable* table);
 
 private:
 	std::ifstream mFile;
 
-	std::vector<Token*> mTokenPile;
+	Token* ScanToken();
 
-	std::vector<Token*> mAutomataStack;
-	std::vector<Token*> mRejectedStack;
-
-	std::string mCurrentLexeme;
+	Automaton* mDFA;
 
 	char mChar;
 
-	Token* GetLastGoodRejected();
-	Token* GetFirstAccepted();
+	Token* mToken1;
+	Token* mToken2;
+
+	Token* GetToken();
 	bool ProcessChar(char c);
-	void ResetStacks();
-	void PushToken(Token* token);
-
-	/* Tokens! */
-	Token* mBinopToken;
-	Token* mBoolToken;
-	Token* mBracketToken;
-	Token* mFloatToken;
-	Token* mIDToken;
-	Token* mIntToken;
-	Token* mStrToken;
-	Token* mUnopToken;
-
+	void ResetStack();
 };
 

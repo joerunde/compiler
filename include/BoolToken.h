@@ -7,7 +7,7 @@ public:
 	BoolToken(std::string lexeme);
 	~BoolToken(void);
 	virtual std::string GetType();
-	virtual void SetupAutomata();
+	//virtual void SetupAutomata();
 	virtual Token* GetToken(std::string lexeme);
 };
 

@@ -1,5 +1,6 @@
 #include "../include/IDToken.h"
 #include "../include/KeywordToken.h"
+#include "../include/SymbolTable.h"
 
 IDToken::IDToken(std::string lexeme):
 	Token(lexeme)
@@ -18,38 +19,17 @@ std::string IDToken::GetType()
 
 Token* IDToken::GetToken(std::string lexeme)
 {
-	if(KeywordToken::sIsKeyword(lexeme))
-	{
-		return new KeywordToken(lexeme);
-	}
-	return new IDToken(lexeme);
+	Token* temp = sSymTable->lookupKeyword(lexeme);
+	if(temp)
+		return temp;
+	temp = sSymTable->lookupType(lexeme);
+	if(temp)
+		return temp;
+	temp = sSymTable->lookupIdentifier(lexeme);
+	if(temp)
+		return temp;
+	temp = new IDToken(lexeme);
+	sSymTable->addIdentifier(lexeme, temp);
+	return temp;
 }
 
-void IDToken::SetupAutomata()
-{
-	tStateMap states;
-	tTransitionMap transitions;
-	std::set<int> acceptStates;
-
-	for(char c = 'a'; c <= 'z'; c++)
-	{
-		states[0].insert(c);
-		states[1].insert(c);
-		transitions[0][c] = 1;
-	}
-	for(char c = 'A'; c <= 'Z'; c++)
-	{
-		states[0].insert(c);
-		states[1].insert(c);
-		transitions[0][c] = 1;
-	}
-	for(char c = '0'; c <= '9'; c++)
-	{
-		states[1].insert(c);
-	}
-	
-	acceptStates.insert(1);
-
-	mRegEx = new Automaton(states, transitions, acceptStates);
-	mHasRegEx = true;
-}

@@ -7,3 +7,4 @@
 #include "KeywordToken.h"
 #include "UnopToken.h"
 #include "StrToken.h"
+#include "TypToken.h"

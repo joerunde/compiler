@@ -1,13 +1,12 @@
 #pragma once
-#include "Token.h"
-class StrToken :
+#include "token.h"
+class TypToken :
 	public Token
 {
 public:
-	StrToken(std::string lexeme);
-	~StrToken(void);
+	TypToken(std::string lexeme);
+	~TypToken(void);
 	virtual std::string GetType();
-	//virtual void SetupAutomata();
 	virtual Token* GetToken(std::string lexeme);
 };
 
