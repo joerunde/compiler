@@ -4,9 +4,10 @@
 #
 CCC = clang
 CCFLAGS =
-OBJS = Automaton.o BinopToken.o BoolToken.o BracketToken.o FloatToken.o IDToken.o IntegerToken.o KeywordToken.o main.o Scanner.o StrToken.o Token.o UnopToken.o
-SOURCE = src/Automaton.cpp src/BinopToken.cpp src/BoolToken.cpp src/BracketToken.cpp src/FloatToken.cpp src/IDToken.cpp src/IntegerToken.cpp src/KeywordToken.cpp src/main.cpp src/Scanner.cpp src/StrToken.cpp src/Token.cpp src/UnopToken.cpp
+OBJS = Automaton.o BinopToken.o BoolToken.o BracketToken.o FloatToken.o IBTLAutomaton.o IDToken.o IntegerToken.o KeywordToken.o Parser.o main.o Scanner.o StrToken.o SymbolTable.o Token.o TypToken.o UnopToken.o
+SOURCE = src/Automaton.cpp src/BinopToken.cpp src/BoolToken.cpp src/BracketToken.cpp src/FloatToken.cpp src/IBTLAutomaton.cpp src/IDToken.cpp src/IntegerToken.cpp src/KeywordToken.cpp src/Parser.cpp src/main.cpp src/Scanner.cpp src/StrToken.cpp src/SymbolTable.cpp src/Token.cpp src/TypToken.cpp src/UnopToken.cpp 
 RUNFLAGS = 
+TESTFLAGS = a.in b.in c.in d.in e.in f.in g.in h.in j.in k.in l.in m.in n.in o.in
 
 $(OBJS): $(SOURCE)
 	$(CCC) $(CCFLAGS) -c $(SOURCE)
@@ -15,22 +16,15 @@ compiler: $(OBJS)
 	$(CCC) $(CCFLAGS) -o compiler $(OBJS)
 
 clean:
-	rm -f Automaton.o BinopToken.o BoolToken.o BracketToken.o FloatToken.o IDToken.o IntegerToken.o KeywordToken.o main.o Scanner.o StrToken.o Token.o UnopToken.o core compiler.o stutest1.out stutest2.out proftest.out
+	rm -f *.o *.out
 	ls
 
 stutest.out: compiler
 	cat stutest1.in
-	-./compiler $(RUNFLAGS) stutest1.in > stutest1.out
+	-./compiler $(RUNFLAGS) $(TESTFLAGS) > stutest1.out
 	cat stutest1.out
-# Notice the next line. The `-' says to ignore the return code. This
-# is a way to have multiple tests of errors that cause non-zero return
-# codes.
-	cat stutest2.in
-	-./compiler stutest2.in > stutest2.out
-	cat stutest2.out
 
 proftest.out: compiler
 	cat $(PROFTEST)
 	compiler $(PROFTEST) > proftest.out
 	cat proftest.out
-
