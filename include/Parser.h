@@ -1,9 +1,42 @@
 #pragma once
 #include <string>
+#include <vector>
 
 class SymbolTable;
 class Scanner;
 class Token;
+
+class Node
+{
+public:
+	Node(Node* parent, Token* term)
+	{mParent = parent; mTerm = term;}
+	Node(Node* parent, std::string nonterm)
+	{mParent = parent; mNonterm = nonterm;}
+
+	Node* addChild(Token* term)
+	{
+		Node* tmp = new Node(this, term);
+		mKids.push_back(tmp);
+		return tmp;
+	}
+	Node* addChild(std::string nonterm)
+	{
+		Node* tmp = new Node(this, nonterm);
+		mKids.push_back(tmp);
+		return tmp;
+	}
+
+	std::vector<Node*> getKids(){return mKids;}
+	Node* getParent(){return mParent;}
+private:
+	std::string mNonterm;
+	Token* mTerm;
+	std::vector<Node*> mKids;
+	Node* mParent;
+};
+
+
 
 class Parser
 {
@@ -14,7 +47,7 @@ public:
 	void SetScanner(Scanner* scanner);
 	void SetSymbolTable(SymbolTable* table);
 
-	void Parse();
+	Node* Parse();
 
 private:
 	//point to a scanner and a symbol table
@@ -50,20 +83,20 @@ private:
 
 	/* implicit stack parsing functions */
 
-	void T();
-	void S();
-	void Sp();
-	void Spp();
-	void E();
-	void O();
-	void Op();
-	void St();
-	void Stp();
-	void Stpp();
-	void EL();
-	void ELp();
-	void VL();
-	void VLp();
+	void T(Node* node);
+	void S(Node* node);
+	void Sp(Node* node);
+	void Spp(Node* node);
+	void E(Node* node);
+	void O(Node* node);
+	void Op(Node* node);
+	void St(Node* node);
+	void Stp(Node* node);
+	void Stpp(Node* node);
+	void EL(Node* node);
+	void ELp(Node* node);
+	void VL(Node* node);
+	void VLp(Node* node);
 
 };
 

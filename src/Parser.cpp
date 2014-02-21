@@ -28,39 +28,43 @@ void Parser::printmsg(std::string msg)
 	std::cout << mIndent << msg << "\n";
 }
 
-void Parser::Parse()
+Node* Parser::Parse()
 {
+	Node* parsetree = new Node(0, "T");
 	mIndent.clear();
 	try{
-		T();
+		T(parsetree);
 	}catch(...)
 	{
 		std::cout << "\nparser barfed\n\n";
 		//nothing, just quit
 	}
+	return parsetree;
 }
 
-void Parser::T()
+void Parser::T(Node* node)
 {
 	std::cout << "\n";
 	Token* tmp = mScanner->PeekOneToken();
 	if(isLB(tmp))
 	{
 		printmsg("T->[S]");
+		node->addChild(tmp);
 		print(tmp);
 		mScanner->GetNextToken();
-		S();
+		S(node->addChild("S"));
 		tmp = mScanner->PeekOneToken();
 		if(!isRB(tmp))
 		{
 			error("Error in T production\n");
 		}
+		node->addChild(tmp);
 		print(tmp);
 		mScanner->GetNextToken();
 	}
 }
 
-void Parser::S()
+void Parser::S(Node* node)
 {
 	mIndent.append("\t");
 
@@ -69,22 +73,23 @@ void Parser::S()
 	if( isLB(tmp) && (isLB(tmp2) || isRB(tmp2) || isConstant(tmp2) || isID(tmp2) ) )
 	{
 		printmsg("S->[S'S''");
+		node->addChild(tmp);
 		print(tmp);
 		mScanner->GetNextToken();
-		Sp();
-		Spp();
+		Sp(node->addChild("S'"));
+		Spp(node->addChild("S''"));
 	}
 	else
 	{
 		printmsg("S->ES''");
-		E();
-		Spp();
+		E(node->addChild("E"));
+		Spp(node->addChild("S''"));
 	}
 
 	mIndent.erase(mIndent.end()-1, mIndent.end());
 }
 
-void Parser::Sp()
+void Parser::Sp(Node* node)
 {
 	mIndent.append("\t");
 
@@ -92,18 +97,20 @@ void Parser::Sp()
 	if(isRB(tmp))
 	{
 		printmsg("S'->]");
+		node->addChild(tmp);
 		print(tmp);
 		mScanner->GetNextToken();
 	}
 	else
 	{
 		printmsg("S'->S]");
-		S();
+		S(node->addChild("S"));
 		tmp = mScanner->PeekOneToken();
 		if(!isRB(tmp))
 		{
 			error("Error in S' production\n");
 		}
+		node->addChild(tmp);
 		print(tmp);
 		mScanner->GetNextToken();
 	}
@@ -111,20 +118,20 @@ void Parser::Sp()
 	mIndent.erase(mIndent.end()-1, mIndent.end());
 }
 
-void Parser::Spp()
+void Parser::Spp(Node* node)
 {
 	Token* tmp = mScanner->PeekOneToken();
 	if(!isRB(tmp))
 	{
 		printmsg("S''->SS''");
-		S();
-		Spp();
+		S(node->addChild("S"));
+		Spp(node->addChild("S''"));
 	}
 	else
 		printmsg("S''->empty");
 }
 
-void Parser::E()
+void Parser::E(Node* node)
 {
 	//mIndent.append("\t");
 
@@ -133,23 +140,23 @@ void Parser::E()
 	if(isConstant(tmp) || isID(tmp))
 	{
 		printmsg("E->O");
-		O();
+		O(node->addChild("O"));
 	}
 	else if(isLB(tmp) && ( isUnop(tmp2) || isBinop(tmp2) ) )
 	{
 		printmsg("E->O");
-		O();
+		O(node->addChild("O"));
 	}
 	else
 	{
 		printmsg("E->St");
-		St();
+		St(node->addChild("St"));
 	}
 
 	//mIndent.erase(mIndent.end()-1, mIndent.end());
 }
 
-void Parser::O()
+void Parser::O(Node* node)
 {
 	mIndent.append("\t");
 	
@@ -158,15 +165,17 @@ void Parser::O()
 	if(isConstant(tmp) || isID(tmp))
 	{
 		printmsg("O->ID|constant");
+		node->addChild(tmp);
 		print(tmp);
 		mScanner->GetNextToken();
 	}
 	else if(isLB(tmp))
 	{
 		printmsg("O->[O'");
+		node->addChild(tmp);
 		print(tmp);
 		mScanner->GetNextToken();
-		Op();
+		Op(node->addChild("O'"));
 	}
 	else
 	{
@@ -176,7 +185,7 @@ void Parser::O()
 	mIndent.erase(mIndent.end()-1, mIndent.end());
 }
 
-void Parser::Op()
+void Parser::Op(Node* node)
 {
 	mIndent.append("\t");
 
@@ -184,6 +193,7 @@ void Parser::Op()
 	if(isAssign(tmp))
 	{
 		printmsg("O'->:= ID O]");
+		node->addChild(tmp);
 		print(tmp);
 		mScanner->GetNextToken();
 		tmp = mScanner->PeekOneToken();
@@ -191,24 +201,27 @@ void Parser::Op()
 		{
 			error("Error in O' production\n");
 		}
+		node->addChild(tmp);
 		print(tmp);
 		mScanner->GetNextToken();
-		O();
+		O(node->addChild("O"));
 	}
 	else if(isUnop(tmp))
 	{
 		printmsg("O->Unop O]");
+		node->addChild(tmp);
 		print(tmp);
 		mScanner->GetNextToken();
-		O();
+		O(node->addChild("O"));
 	}
 	else if(isBinop(tmp))
 	{
 		printmsg("O->Binop O O]");
+		node->addChild(tmp);
 		print(tmp);
 		mScanner->GetNextToken();
-		O();
-		O();
+		O(node->addChild("O"));
+		O(node->addChild("O"));
 	}
 
 	//common to all productions
@@ -217,13 +230,14 @@ void Parser::Op()
 	{
 		error("Error in O' production\n");
 	}
+	node->addChild(tmp);
 	print(tmp);
 	mScanner->GetNextToken();
 
 	mIndent.erase(mIndent.end()-1, mIndent.end());
 }
 
-void Parser::St()
+void Parser::St(Node* node)
 {
 	mIndent.append("\t");
 
@@ -231,9 +245,10 @@ void Parser::St()
 	if(isLB(tmp))
 	{
 		printmsg("St->[St'");
+		node->addChild(tmp);
 		print(tmp);
 		mScanner->GetNextToken();
-		Stp();
+		Stp(node->addChild("St'"));
 	}
 	else
 	{
@@ -243,7 +258,7 @@ void Parser::St()
 	mIndent.erase(mIndent.end()-1, mIndent.end());
 }
 
-void Parser::Stp()
+void Parser::Stp(Node* node)
 {
 	mIndent.append("\t");
 
@@ -254,59 +269,68 @@ void Parser::Stp()
 		if(isWhile(tmp))
 		{
 			printmsg("St'->while E EL ]");
+			node->addChild(tmp);
 			print(tmp);
-			E();
-			EL();
+			E(node->addChild("E"));
+			EL(node->addChild("EL"));
 			tmp = mScanner->GetNextToken();
 			if(!isRB(tmp))
 			{
 				error("Error in St' production\n");
 			}
+			node->addChild(tmp);
 			print(tmp);
 		}
 		else if(isIf(tmp))
 		{
 			printmsg("St'->if E E St''");
+			node->addChild(tmp);
 			print(tmp);
-			E();
-			E();
-			Stpp();
+			E(node->addChild("E"));
+			E(node->addChild("E"));
+			Stpp(node->addChild("Stpp"));
 		}
 		else if(isLet(tmp))
 		{
 			printmsg("St'->let [VL] ]");
+			node->addChild(tmp);
 			print(tmp);
 			tmp = mScanner->PeekOneToken();
 			if(!isLB(tmp))
 			{
 				error("Error in St' production\n");
 			}
+			node->addChild(tmp);
 			print(tmp);
 			mScanner->GetNextToken();
-			VL();
+			VL(node->addChild("VL"));
 			tmp = mScanner->GetNextToken();
 			if(!isRB(tmp))
 			{
 				error("Error in St' production\n");
 			}
+			node->addChild(tmp);
 			print(tmp);
 			tmp = mScanner->GetNextToken();
 			if(!isRB(tmp))
 			{
 				error("Error in St' production\n");
 			}
+			node->addChild(tmp);
 			print(tmp);
 		}
 		else if(isStdout(tmp))
 		{
 			printmsg("St'->stdout O ]");
+			node->addChild(tmp);
 			print(tmp);
-			O();
+			O(node->addChild("O"));
 			tmp = mScanner->GetNextToken();
 			if(!isRB(tmp))
 			{
 				error("Error in St' production\n");
 			}
+			node->addChild(tmp);
 			print(tmp);
 		}
 	}
@@ -318,7 +342,7 @@ void Parser::Stp()
 	mIndent.erase(mIndent.end()-1, mIndent.end());
 }
 
-void Parser::Stpp()
+void Parser::Stpp(Node* node)
 {
 	mIndent.append("\t");
 	
@@ -327,34 +351,36 @@ void Parser::Stpp()
 	{
 		printmsg("St''->]");
 		mScanner->GetNextToken();
+		node->addChild(tmp);
 		print(tmp);
 	}
 	else
 	{
 		printmsg("St''->E]");
-		E();
+		E(node->addChild("E"));
 		tmp = mScanner->GetNextToken();
 		if(!isRB(tmp))
 		{
 			error("error in St'' production\n");
 		}
+		node->addChild(tmp);
 		print(tmp);
 	}
 
 	mIndent.erase(mIndent.end()-1, mIndent.end());
 }
 
-void Parser::EL()
+void Parser::EL(Node* node)
 {
 	//mIndent.append("\t");
 	printmsg("EL->E EL'");
-	E();
-	ELp();
+	E(node->addChild("E"));
+	ELp(node->addChild("EL'"));
 	
 	//mIndent.erase(mIndent.end()-1, mIndent.end());
 }
 
-void Parser::ELp()
+void Parser::ELp(Node* node)
 {
 	//mIndent.append("\t");
 
@@ -365,7 +391,7 @@ void Parser::ELp()
 		printmsg("EL'-> EL");
 		//print(tmp);
 		//mScanner->GetNextToken();
-		EL();
+		EL(node->addChild("EL"));
 	}
 	else
 	{
@@ -375,7 +401,7 @@ void Parser::ELp()
 	//mIndent.erase(mIndent.end()-1, mIndent.end());
 }
 
-void Parser::VL()
+void Parser::VL(Node* node)
 {
 	mIndent.append("\t");
 	printmsg("VL-> [ID Type] VL'");
@@ -385,30 +411,35 @@ void Parser::VL()
 	{
 		error("Error in VL production\n");
 	}
+	node->addChild(tmp);
 	print(tmp);
 	tmp = mScanner->GetNextToken();
 	if(!isID(tmp))
 	{
 		error("Error in VL Production\n");
 	}
+	node->addChild(tmp);
 	print(tmp);
 	tmp = mScanner->GetNextToken();
 	if(!isTyp(tmp))
 	{
 		error("Error in VL Production\n");
 	}
+	node->addChild(tmp);
 	print(tmp);
 	tmp = mScanner->GetNextToken();
 	if(!isRB(tmp))
 	{
 		error("Error in VL Production\n");
 	}
-	VLp();
+	node->addChild(tmp);
+	print(tmp);
+	VLp(node->addChild("VL'"));
 
 	mIndent.erase(mIndent.end()-1, mIndent.end());
 }
 
-void Parser::VLp()
+void Parser::VLp(Node* node)
 {
 	mIndent.append("\t");
 
@@ -416,7 +447,7 @@ void Parser::VLp()
 	if(isLB(tmp))
 	{
 		printmsg("VL'->VL");
-		VL();
+		VL(node->addChild("VL"));
 	}
 	else
 	{
