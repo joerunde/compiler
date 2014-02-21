@@ -441,7 +441,7 @@ void Parser::VL(Node* node)
 
 void Parser::VLp(Node* node)
 {
-	mIndent.append("\t");
+	//mIndent.append("\t");
 
 	Token* tmp = mScanner->PeekOneToken();
 	if(isLB(tmp))
@@ -454,7 +454,7 @@ void Parser::VLp(Node* node)
 		printmsg("VL'->empty");
 	}
 
-	mIndent.erase(mIndent.end()-1, mIndent.end());
+	//mIndent.erase(mIndent.end()-1, mIndent.end());
 }
 
 void Parser::error(std::string msg)
