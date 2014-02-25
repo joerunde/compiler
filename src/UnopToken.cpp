@@ -6,7 +6,6 @@ UnopToken::UnopToken(std::string lexeme):
 {
 }
 
-
 UnopToken::~UnopToken(void)
 {
 }
@@ -21,3 +20,7 @@ Token* UnopToken::GetToken(std::string lexeme)
 	return new UnopToken(lexeme);
 }
 
+bool UnopToken::isUnop()
+{
+	return true;
+}

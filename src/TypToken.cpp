@@ -15,8 +15,12 @@ std::string TypToken::GetType()
 	return("Type");
 }
 
-
 Token* TypToken::GetToken(std::string lexeme)
 {
 	return new TypToken(lexeme);
+}
+
+bool TypToken::isTyp()
+{
+	return true;
 }

@@ -33,3 +33,8 @@ Token* IDToken::GetToken(std::string lexeme)
 	return temp;
 }
 
+bool IDToken::isID()
+{
+	return true;
+}
+

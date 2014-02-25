@@ -8,5 +8,6 @@ public:
 	~TypToken(void);
 	virtual std::string GetType();
 	virtual Token* GetToken(std::string lexeme);
+	virtual bool isTyp();
 };
 

@@ -21,3 +21,12 @@ Token* StrToken::GetToken(std::string lexeme)
 	return new StrToken(lexeme);
 }
 
+bool StrToken::isStr()
+{
+	return true;
+}
+
+bool StrToken::isConstant()
+{
+	return true;
+}

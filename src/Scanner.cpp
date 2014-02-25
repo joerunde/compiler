@@ -7,6 +7,7 @@
 Scanner::Scanner(void)
 {
 	mDFA = new IBTLAutomaton();
+	mBlank = new BlankToken();
 }
 
 Scanner::~Scanner(void)
@@ -58,7 +59,7 @@ Token* Scanner::PeekTwoTokens()
 
 Token* Scanner::ScanToken()
 {
-	Token* temp = 0;
+	Token* temp = mBlank;
 	mDFA->ResetAutomata();
 
 	while(!mFile.eof())

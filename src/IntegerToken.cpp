@@ -21,4 +21,12 @@ Token* IntegerToken::GetToken(std::string lexeme)
 	return new IntegerToken(lexeme);
 }
 
+bool IntegerToken::isConstant()
+{
+	return true;
+}
 
+bool IntegerToken::isInt()
+{
+	return true;
+}

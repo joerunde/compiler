@@ -21,3 +21,12 @@ Token* FloatToken::GetToken(std::string lexeme )
 	return new FloatToken(lexeme);
 }
 
+bool FloatToken::isConstant()
+{
+	return true;
+}
+
+bool FloatToken::isReal()
+{
+	return true;
+}

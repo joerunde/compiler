@@ -5,38 +5,7 @@
 class SymbolTable;
 class Scanner;
 class Token;
-
-class Node
-{
-public:
-	Node(Node* parent, Token* term)
-	{mParent = parent; mTerm = term;}
-	Node(Node* parent, std::string nonterm)
-	{mParent = parent; mNonterm = nonterm;}
-
-	Node* addChild(Token* term)
-	{
-		Node* tmp = new Node(this, term);
-		mKids.push_back(tmp);
-		return tmp;
-	}
-	Node* addChild(std::string nonterm)
-	{
-		Node* tmp = new Node(this, nonterm);
-		mKids.push_back(tmp);
-		return tmp;
-	}
-
-	std::vector<Node*> getKids(){return mKids;}
-	Node* getParent(){return mParent;}
-private:
-	std::string mNonterm;
-	Token* mTerm;
-	std::vector<Node*> mKids;
-	Node* mParent;
-};
-
-
+class Node;
 
 class Parser
 {
@@ -60,26 +29,6 @@ private:
 
 	void printmsg(std::string msg);
 	void print(Token* token);
-
-	bool isRB(Token* token);
-	bool isLB(Token* token);
-	bool isConstant(Token* token);
-	bool isInt(Token* token);
-	bool isID(Token* token);
-	bool isReal(Token* token);
-	bool isBool(Token* token);
-	bool isStr(Token* token);
-	bool isAssign(Token* token);
-	bool isUnop(Token* token);
-	bool isBinop(Token* token);
-	
-	bool isTyp(Token* token);
-	bool isKeyword(Token* token);
-	bool isWhile(Token* token);
-	bool isLet(Token* token);
-	bool isIf(Token* token);
-	bool isStdout(Token* token);
-
 
 	/* implicit stack parsing functions */
 

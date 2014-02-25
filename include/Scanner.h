@@ -30,6 +30,8 @@ private:
 
 	char mChar;
 
+	Token* mBlank;
+
 	Token* mToken1;
 	Token* mToken2;
 

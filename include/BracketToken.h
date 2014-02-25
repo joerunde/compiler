@@ -7,7 +7,8 @@ public:
 	BracketToken(std::string lexeme);
 	~BracketToken(void);
 	virtual std::string GetType();
-	//virtual void SetupAutomata();
 	virtual Token* GetToken(std::string lexeme);
+	virtual bool isRB();
+	virtual bool isLB();
 };
 

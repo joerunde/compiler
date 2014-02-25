@@ -8,13 +8,12 @@ public:
 	KeywordToken(std::string lexeme);
 	~KeywordToken(void);
 	virtual std::string GetType();
-	//virtual void SetupAutomata();
 	virtual Token* GetToken(std::string lexeme);
+	virtual bool isKeyword();
+	virtual bool isWhile();
+	virtual bool isIf();
+	virtual bool isLet();
+	virtual bool isStdout();
 
-	//static bool sIsKeyword(std::string lexeme);
-	
-private:
-	//static std::set<std::string> sKeywordSymbols;
-	//static std::set<std::string> sInitializeSymbols();
 };
 

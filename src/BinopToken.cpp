@@ -21,3 +21,7 @@ Token* BinopToken::GetToken(std::string lexeme)
 	return new BinopToken(lexeme);
 }
 
+bool BinopToken::isBinop()
+{
+	return true;
+}

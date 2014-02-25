@@ -21,4 +21,16 @@ Token* BracketToken::GetToken(std::string lexeme)
 	return new BracketToken(lexeme);
 }
 
+bool BracketToken::isRB()
+{
+	if(mLexeme == "]")
+		return true;
+	return false;
+}
 
+bool BracketToken::isLB()
+{
+	if(mLexeme == "[")
+		return true;
+	return false;
+}

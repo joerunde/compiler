@@ -6,7 +6,6 @@ BoolToken::BoolToken(std::string lexeme):
 {
 }
 
-
 BoolToken::~BoolToken(void)
 {
 }
@@ -21,3 +20,12 @@ Token* BoolToken::GetToken(std::string lexeme)
 	return new BoolToken(lexeme);
 }
 
+bool BoolToken::isConstant()
+{
+	return true;
+}
+
+bool BoolToken::isBool()
+{
+	return true;
+}
