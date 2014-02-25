@@ -93,7 +93,7 @@ void Parser::S(Node* node)
 
 void Parser::Sp(Node* node)
 {
-	mIndent.append("\t");
+	//mIndent.append("\t");
 
 	Token* tmp = mScanner->PeekOneToken();
 	if(tmp->isRB())
@@ -117,7 +117,7 @@ void Parser::Sp(Node* node)
 		mScanner->GetNextToken();
 	}
 
-	mIndent.erase(mIndent.end() - 1, mIndent.end());
+	//mIndent.erase(mIndent.end() - 1, mIndent.end());
 }
 
 void Parser::Spp(Node* node)
@@ -353,7 +353,7 @@ void Parser::Stp(Node* node)
 
 void Parser::Stpp(Node* node)
 {
-	mIndent.append("\t");
+	//mIndent.append("\t");
 	
 	Token* tmp = mScanner->PeekOneToken();
 	if(tmp->isRB())
@@ -376,7 +376,7 @@ void Parser::Stpp(Node* node)
 		print(tmp);
 	}
 
-	mIndent.erase(mIndent.end()-1, mIndent.end());
+	//mIndent.erase(mIndent.end()-1, mIndent.end());
 }
 
 void Parser::EL(Node* node)
@@ -421,7 +421,7 @@ void Parser::VL(Node* node)
 		error("Error in VL production\n");
 	}
 	//node->addChild(tmp);
-	//print(tmp);
+	print(tmp);
 	tmp = mScanner->GetNextToken();
 	if(!tmp->isID())
 	{
