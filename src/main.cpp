@@ -53,6 +53,7 @@ int main(int argc, char **argv)
 		table->clearTables();
 	}while(s != std::string("quit"));
 
+	std::cout << "\n\n\n";
 
 	return 0;
 }
