@@ -103,7 +103,7 @@ Node::eVarType Node::checkType(eVarType left, eVarType right)
 	if(left == right)
 		return left;
 	//there is a conflict, is it float vs. int?
-	if(left == TYPE_FLOAT || right == TYPE_FLOAT)
+	if((left == TYPE_FLOAT && right == TYPE_INT) || (left == TYPE_INT && right == TYPE_FLOAT))
 	{
 		//if so, we can take care of it, and convert this op to float
 		if(left == TYPE_INT)

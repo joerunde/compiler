@@ -15,4 +15,5 @@
 [stdout[and true true] ]
 [stdout[or true false] ]
 [stdout[not true] ]
+[stdout[+ [- 3.4 2] [/ 6 3]]]
 ]
