@@ -32,11 +32,11 @@ std::string UnopToken::GetLexeme(int type)
 	if(mLexeme == "not")
 		tmp = "invert";
 	if(mLexeme == "stdout" && type != Node::TYPE_STRING)
-		tmp = "dup .";
+		tmp = "dup .\n";
 	if(mLexeme == "stdout" && type == Node::TYPE_FLOAT)
-		tmp = "dup f.";
+		tmp = "dup f.\n";
 	if(mLexeme == "stdout" && type == Node::TYPE_STRING)
-		tmp = "2dup TYPE";
+		tmp = "2dup TYPE\n";
 
 	if(type == Node::TYPE_FLOAT && mLexeme != "stdout")
 	{
