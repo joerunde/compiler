@@ -29,7 +29,7 @@ gforthtest.out: compiler
 	./compiler $(RUNFLAGS) $(GTESTFILES) > gforthtest.out
 	cat gforthtest.out
 	
-gforthtest:
+gforthtest: gforthtest.out
 	gforth gforthtest.out
 	
 proftest.out: compiler
