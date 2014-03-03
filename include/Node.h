@@ -2,6 +2,8 @@
 
 #include <string>
 #include <vector>
+#include <map>
+#include <string>
 class Token;
 
 class Node
@@ -21,21 +23,35 @@ public:
 
 	bool hasToken();
 
+	enum eVarType{
+		TYPE_INT,
+		TYPE_FLOAT,
+		TYPE_STRING,
+		TYPE_BOOL,
+		TYPE_NONE
+	};
+
 private:
 	std::string mNonterm;
 	Token* mTerm;
 	std::vector<Node*> mKids;
 	Node* mParent;
-
+	
 	void quickPost();
 
-	//returns whether the node is on the float stack
-	bool recursiveProcess(); 
+	//sets and returns the type of the branch at this node
+	//adds conversion nodes where necessary
+	eVarType recursiveProcess();
+
+	//type check for a binary operator
+	eVarType checkType(eVarType left, eVarType right);
 	
 	Node* addParentConversion(bool itof);
 
-	//are we on the floating point stack? If not then int stack
-	bool mIsFloat;
+	void printType(eVarType type);
+	
+	//What variable type is this branch of the parse tree dealing with?
+	eVarType mType;
 
 	//is this an int to float conversion node?
 	bool mitof;
@@ -43,6 +59,6 @@ private:
 	//is this a float to int conversion node?
 	bool mftoi;
 
-	void init(){mitof = false; mftoi = false; mIsFloat = false;}
+	void init(){mitof = false; mftoi = false; mType = TYPE_NONE;}
 };
 

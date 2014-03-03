@@ -6,12 +6,12 @@
 Node::Node():
 	mitof(false),
 	mftoi(false),
-	mIsFloat(false)
+	mType(TYPE_NONE)
 {}
 
 Node::Node(Node* parent, Token* term)
 {
-	mParent = parent; 
+	mParent = parent;
 	mTerm = term;
 	mNonterm = "";
 	init();
@@ -35,7 +35,7 @@ void Node::processTree()
 	quickPost();
 }
 
-bool Node::recursiveProcess()
+Node::eVarType Node::recursiveProcess()
 {
 	//check if this is a leaf
 	if(mKids.size() == 0)
@@ -47,14 +47,23 @@ bool Node::recursiveProcess()
 				if(mTerm->isReal())
 				{
 					//need fp stack
-					mIsFloat = true;
-					return true;
+					mType = TYPE_FLOAT;
+					return mType;
+				}
+				if(mTerm->isStr())
+				{
+					mType = TYPE_STRING;
+					return mType;
+				}
+				if(mTerm->isBool())
+				{
+					mType = TYPE_BOOL;
+					return mType;
 				}
 			}
 		}
-		//dont need fp stack
-		mIsFloat = false;
-		return false;
+		//default int
+		return TYPE_INT;
 	}
 
 	//check if this is an operator which needs to deal with floats vs. ints
@@ -63,41 +72,79 @@ bool Node::recursiveProcess()
 		if(mTerm->isBinop())
 		{
 			//assume two children, because binop
-			bool x1, x2;
+			eVarType x1, x2;
 			x1 = mKids[0]->recursiveProcess();
 			x2 = mKids[1]->recursiveProcess();
-			//check if either needs float
-			if(x1 || x2)
-			{
-				if(!x1)
-				{
-					mKids[0] = mKids[0]->addParentConversion(true);
-				}
-				if(!x2)
-				{
-					mKids[1] = mKids[1]->addParentConversion(true);
-				}
-				mIsFloat = true;
-			}
-			else
-				mIsFloat = false;
-			return mIsFloat;
+
+			mType = checkType(x1, x2);
+			return Node::eVarType(mTerm->GetReturnType(mType));
 		}//always return before here, because kids have already been processed
 	}
 
 	//pass through if 1 kid, b/c this is unop or nonproduction
 	if(mKids.size() == 1)
 	{
-		return mKids[0]->recursiveProcess();
+		mType = mKids[0]->recursiveProcess();
+		return mType;
 	}
 
 	//anything else is a multi expression branch, right.........?
-	//so return false? (int stack by default)
+	//so return no type
 	for(int c = 0; c < mKids.size(); c++)
 	{
 		mKids[c]->recursiveProcess();
 	}
-	return false;
+	return TYPE_NONE;
+}
+
+Node::eVarType Node::checkType(eVarType left, eVarType right)
+{
+	//if there's no conflict, just return
+	if(left == right)
+		return left;
+	//there is a conflict, is it float vs. int?
+	if(left == TYPE_FLOAT || right == TYPE_FLOAT)
+	{
+		//if so, we can take care of it, and convert this op to float
+		if(left == TYPE_INT)
+		{
+			mKids[0] = mKids[0]->addParentConversion(true);
+		}
+		if(right == TYPE_INT)
+		{
+			mKids[1] = mKids[1]->addParentConversion(true);
+		}
+		return TYPE_FLOAT;
+	}
+	//otherwise, we can't take care of it
+	std::cout << "Type error, cannot operate on ";
+	printType(left);
+	std::cout << " and ";
+	printType(right);
+	std::cout << std::endl;
+	return TYPE_NONE;
+}
+
+void Node::printType(Node::eVarType type)
+{
+	switch(type)
+	{
+	case TYPE_INT:
+		std::cout << "INT";
+		break;
+	case TYPE_FLOAT:
+		std::cout << "FLOAT";
+		break;
+	case TYPE_STRING:
+		std::cout << "STRING";
+		break;
+	case TYPE_BOOL:
+		std::cout << "BOOL";
+		break;
+	case TYPE_NONE:
+		std::cout << "NO TYPE";
+		break;
+	}
 }
 
 void Node::quickPost()
@@ -108,7 +155,7 @@ void Node::quickPost()
 	}
 	if(mTerm != 0)
 	{
-		std::cout << mTerm->GetLexeme() << " ";
+		std::cout << mTerm->GetLexeme(mType) << " ";
 	}
 	if(mitof)
 	{
@@ -127,6 +174,10 @@ Node* Node::addParentConversion(bool itof)
 	tmp->mKids.push_back(this);
 	tmp->mitof = itof;
 	tmp->mftoi = !itof;
+	if(itof)
+		tmp->mType = TYPE_FLOAT;
+	else
+		tmp->mType = TYPE_INT;
 	return tmp;
 }
 

@@ -13,9 +13,19 @@ Token::~Token()
 {
 }
 
+int Token::GetReturnType(int type)
+{
+	return type;
+}
+
 std::string Token::GetLexeme()
 {
 	return mLexeme;
+}
+
+std::string Token::GetLexeme(int type)
+{
+	return GetLexeme();
 }
 
 void Token::setSymbolTable(SymbolTable* table)

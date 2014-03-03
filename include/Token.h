@@ -13,8 +13,11 @@ public:
 
 	virtual std::string GetType() = 0;
 	std::string GetLexeme();
+	virtual std::string GetLexeme(int type);
 
 	virtual Token* GetToken(std::string lexeme) = 0;
+
+	virtual int GetReturnType(int type);
 
 	static void setSymbolTable(SymbolTable* table);
 

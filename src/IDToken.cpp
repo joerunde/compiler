@@ -1,5 +1,6 @@
 #include "../include/IDToken.h"
 #include "../include/KeywordToken.h"
+#include "../include/UnopToken.h"
 #include "../include/SymbolTable.h"
 
 IDToken::IDToken(std::string lexeme):
@@ -19,6 +20,8 @@ std::string IDToken::GetType()
 
 Token* IDToken::GetToken(std::string lexeme)
 {
+	if(lexeme == "stdout")
+		return new UnopToken(lexeme);
 	Token* temp = sSymTable->lookupKeyword(lexeme);
 	if(temp)
 		return temp;

@@ -1,4 +1,5 @@
 #include "../include/UnopToken.h"
+#include "../include/Node.h"
 
 
 UnopToken::UnopToken(std::string lexeme):
@@ -23,4 +24,24 @@ Token* UnopToken::GetToken(std::string lexeme)
 bool UnopToken::isUnop()
 {
 	return true;
+}
+
+std::string UnopToken::GetLexeme(int type)
+{
+	std::string tmp = mLexeme;
+	if(mLexeme == "not")
+		tmp = "invert";
+	if(mLexeme == "stdout" && type != Node::TYPE_STRING)
+		tmp = ".s";
+	if(mLexeme == "stdout" && type == Node::TYPE_STRING)
+		tmp = "dup2 TYPE";
+
+	if(type == Node::TYPE_FLOAT)
+	{
+		std::string tmp2 = "f";
+		tmp2.append(tmp);
+		tmp = tmp2;
+	}
+
+	return tmp;
 }

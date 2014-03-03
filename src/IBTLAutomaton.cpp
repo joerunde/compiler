@@ -14,7 +14,7 @@ IBTLAutomaton::IBTLAutomaton()
 	mAcceptStatesNoPush.insert(1);
 	mAcceptTokens[1] = new BracketToken("");
 
-	/* Strings*/
+	/* Strings*/ 
 	mStateMap[0].insert('"');
 	mStateMap[2].insert('"');
 	mTransitionMap[0]['"'] = 2;
@@ -36,19 +36,29 @@ IBTLAutomaton::IBTLAutomaton()
 		mStateMap[35].insert(c);
 		mTransitionMap[35][c] = 10;
 
+		//negative constants
+		mStateMap[37].insert(c);
+		mTransitionMap[37][c] = 4;
 		//for IDs
 		mStateMap[32].insert(c);
 	}
 	mStateMap[0].insert('.');
 	mStateMap[4].insert('.');
+	mStateMap[37].insert('.');
 	mStateMap[4].insert('e');
 	mStateMap[6].insert('e');
+	mStateMap[7].insert('-');
+	mStateMap[35].insert('-');
 	mTransitionMap[4]['.'] = 6;
 	mTransitionMap[0]['.'] = 6;
+	mTransitionMap[37]['.'] = 6;
 	mTransitionMap[4]['e'] = 35;
 	mTransitionMap[6]['e'] = 7;
+	mTransitionMap[7]['-'] = 10;
+	mTransitionMap[35]['-'] = 10;
 	mElseMap[4] = 5;
 	mElseMap[35] = 36;
+	mElseMap[37] = 12;
 	mAcceptPushTwoStates.insert(36);
 	mAcceptTokens[36] = new IntegerToken("");
 	mAcceptPushOneStates.insert(5);
@@ -83,7 +93,7 @@ IBTLAutomaton::IBTLAutomaton()
 	mTransitionMap[0][':'] = 13;
 	mTransitionMap[0]['!'] = 13;
 	mTransitionMap[0]['+'] = 14;
-	mTransitionMap[0]['-'] = 14;
+	mTransitionMap[0]['-'] = 37;//can also be number
 	mTransitionMap[0]['*'] = 14;
 	mTransitionMap[0]['/'] = 14;
 	mTransitionMap[0]['%'] = 14;

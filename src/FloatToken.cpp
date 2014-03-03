@@ -4,6 +4,11 @@
 FloatToken::FloatToken(std::string lexeme):
 	Token(lexeme)
 {
+	//append an "e0" if there's no e in the number
+	if(mLexeme.find("e") == std::string::npos)
+	{
+		mLexeme.append("e0");
+	}
 }
 
 
