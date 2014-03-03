@@ -16,4 +16,7 @@
 [stdout[or true false] ]
 [stdout[not true] ]
 [stdout[+ [- 3.4 2] [/ 6 3]]]
+[stdout[sin 3.14] ]
+[stdout[cos 3.14] ]
+[stdout[tan 3.14] ]
 ]
