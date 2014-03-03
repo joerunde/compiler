@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 		else
 		{
 			if(argc > 1)
-				exit(0);
+				break;
 			std::cout << "\nFile: ";
 			std::getline(std::cin, s);
 		}
