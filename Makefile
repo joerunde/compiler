@@ -9,6 +9,7 @@ SOURCE = src/Automaton.cpp src/BinopToken.cpp src/BoolToken.cpp src/BracketToken
 RUNFLAGS = 
 TESTFLAGS = a.in b.in c.in d.in e.in f.in g.in h.in j.in k.in l.in m.in n.in o.in p.in q.in r.in s.in t.in u.in v.in w.in x.in y.in z.in
 GTESTFILES = ga.in
+GBADFILES = gb.in
 
 $(OBJS): $(SOURCE)
 	$(CCC) $(CCFLAGS) -c $(SOURCE)
@@ -31,6 +32,10 @@ gforthtest.out: compiler
 	
 gforthtest: gforthtest.out
 	gforth gforthtest.out
+	
+typeerrors: compiler
+	cat $(GBADFILES)
+	./compiler $(GBADFILES)
 	
 proftest.out: compiler
 	cat $(PROFTEST)

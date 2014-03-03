@@ -1,0 +1,8 @@
+[
+[+ "Hi" 3.4]
+[/ 3.2 true]
+[* false 7]
+[% true "true"]
+[>= true 42]
+[!= false 0.0]
+]
