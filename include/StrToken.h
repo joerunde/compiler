@@ -11,5 +11,7 @@ public:
 	virtual Token* GetToken(std::string lexeme);
 	virtual bool isStr();
 	virtual bool isConstant();
+
+	virtual std::string GetLexeme(int type);
 };
 

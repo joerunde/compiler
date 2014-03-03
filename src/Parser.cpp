@@ -6,7 +6,8 @@
 #include <iostream>
 #include <typeinfo>
 
-Parser::Parser(void)
+Parser::Parser(bool printThings):
+	mPrint(printThings)
 {
 }
 
@@ -41,7 +42,7 @@ Node* Parser::Parse()
 
 void Parser::T(Node* node)
 {
-	std::cout << "\n";
+	//std::cout << "\n";
 	Token* tmp = mScanner->PeekOneToken();
 	if(tmp->isLB())
 	{
@@ -427,10 +428,12 @@ void Parser::error(std::string msg)
 
 void Parser::print(Token* token)
 {
-	std::cout << mIndent << token->GetLexeme() << std::endl;
+	if(mPrint)
+		std::cout << mIndent << token->GetLexeme() << std::endl;
 }
 
 void Parser::printmsg(std::string msg)
 {
-	std::cout << mIndent << msg << "\n";
+	if(mPrint)
+		std::cout << mIndent << msg << "\n";
 }

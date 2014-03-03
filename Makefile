@@ -8,6 +8,7 @@ OBJS = Automaton.o BinopToken.o BoolToken.o BracketToken.o FloatToken.o IBTLAuto
 SOURCE = src/Automaton.cpp src/BinopToken.cpp src/BoolToken.cpp src/BracketToken.cpp src/FloatToken.cpp src/IBTLAutomaton.cpp src/IDToken.cpp src/IntegerToken.cpp src/KeywordToken.cpp src/Parser.cpp src/main.cpp src/Scanner.cpp src/StrToken.cpp src/SymbolTable.cpp src/Token.cpp src/TypToken.cpp src/UnopToken.cpp src/Node.cpp
 RUNFLAGS = 
 TESTFLAGS = a.in b.in c.in d.in e.in f.in g.in h.in j.in k.in l.in m.in n.in o.in p.in q.in r.in s.in t.in u.in v.in w.in x.in y.in z.in
+GTESTFILES = ga.in
 
 $(OBJS): $(SOURCE)
 	$(CCC) $(CCFLAGS) -c $(SOURCE)
@@ -22,6 +23,14 @@ clean:
 stutest.out: compiler
 	-./compiler $(RUNFLAGS) $(TESTFLAGS) > stutest1.out
 	cat stutest1.out
+	
+gforthtest.out: compiler
+	cat $(GTESTFILES)
+	./compiler $(RUNFLAGS) $(GTESTFILES) > gforthtest.out
+	cat gforthtest.out
+	gforth gforthtest.out
+	
+gforthtest:
 
 proftest.out: compiler
 	cat $(PROFTEST)

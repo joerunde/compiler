@@ -10,7 +10,7 @@ class Node;
 class Parser
 {
 public:
-	Parser(void);
+	Parser(bool printThings = false);
 	~Parser(void);
 
 	void SetScanner(Scanner* scanner);
@@ -24,6 +24,8 @@ private:
 	Scanner* mScanner;
 
 	std::string mIndent;
+
+	bool mPrint;
 
 	void error(std::string msg);
 

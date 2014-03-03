@@ -30,3 +30,13 @@ bool StrToken::isConstant()
 {
 	return true;
 }
+
+std::string StrToken::GetLexeme(int type)
+{
+	//start with gforth prefix
+	std::string tmp = "s\" ";
+	//append the string literal with first quotation stripped
+	tmp.append(mLexeme.begin() + 1, mLexeme.end());
+
+	return tmp;
+}

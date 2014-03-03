@@ -70,7 +70,8 @@ Token* Scanner::ScanToken()
 		{
 			//if this is a space and nothing was lexing, throw it away
 			mFile.get();
-			std::cout << mChar;
+			//uncomment to format the tokens as given by the input file, if printing tokens
+			//std::cout << mChar;
 			continue;
 		}	
 		else
