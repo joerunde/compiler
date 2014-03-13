@@ -134,7 +134,7 @@ void Parser::E(Node* node)
 		printmsg("E->O");
 		O(node->addChild("O"));
 	}
-	else
+	else //assuming we have "[ keyword"
 	{
 		printmsg("E->St");
 		St(node->addChild("St"));
@@ -303,7 +303,7 @@ void Parser::Stp(Node* node)
 			}
 			print(tmp);
 		}
-		else if(tmp->isStdout())
+		else if(tmp->isStdout()) //stdout now handled as unop, this no longer hit
 		{
 			printmsg("St'->stdout O ]");
 			//branch on operator
