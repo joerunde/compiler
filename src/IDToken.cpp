@@ -2,10 +2,12 @@
 #include "../include/KeywordToken.h"
 #include "../include/UnopToken.h"
 #include "../include/SymbolTable.h"
+#include "../include/Node.h"
 
 IDToken::IDToken(std::string lexeme):
 	Token(lexeme)
 {
+	mType = Node::TYPE_NONE;	
 }
 
 
@@ -40,4 +42,11 @@ bool IDToken::isID()
 {
 	return true;
 }
+
+int IDToken::GetReturnType(int type)
+{
+	int unused = type;
+	return mType;
+}
+
 

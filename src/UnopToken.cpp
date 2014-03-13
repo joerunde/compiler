@@ -34,7 +34,7 @@ std::string UnopToken::GetLexeme(int type)
 	if(mLexeme == "stdout" && type != Node::TYPE_STRING)
 		tmp = "dup .\n";
 	if(mLexeme == "stdout" && type == Node::TYPE_FLOAT)
-		tmp = "dup f.\n";
+		tmp = "fdup f.\n";
 	if(mLexeme == "stdout" && type == Node::TYPE_STRING)
 		tmp = "2dup TYPE\n";
 

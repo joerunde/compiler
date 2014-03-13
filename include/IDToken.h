@@ -9,5 +9,8 @@ public:
 	virtual std::string GetType();
 	virtual Token* GetToken(std::string lexeme);
 	virtual bool isID();
+	virtual int GetReturnType(int type);	
+private:
+	int mType;
 };
 
