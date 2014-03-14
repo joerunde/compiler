@@ -10,7 +10,6 @@ IDToken::IDToken(std::string lexeme):
 	mType = Node::TYPE_NONE;	
 }
 
-
 IDToken::~IDToken(void)
 {
 }
@@ -18,6 +17,17 @@ IDToken::~IDToken(void)
 std::string IDToken::GetType()
 {
 	return("Identifier");
+}
+
+std::string IDToken::GetLexeme(int type)
+{
+	int unused = type;
+	std::string tmp = mLexeme;
+	if(type != Node::TYPE_FLOAT)
+		tmp.append(" @");
+	else
+		tmp.append(" f@");
+	return(tmp);
 }
 
 Token* IDToken::GetToken(std::string lexeme)
@@ -49,4 +59,8 @@ int IDToken::GetReturnType(int type)
 	return mType;
 }
 
+void IDToken::setType(int type)
+{
+	mType = type;
+}
 

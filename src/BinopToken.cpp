@@ -25,6 +25,13 @@ bool BinopToken::isBinop()
 	return true;
 }
 
+bool BinopToken::isAssign()
+{
+	if(mLexeme == ":=")
+		return true;
+	return false;
+}
+
 std::string BinopToken::GetLexeme(int type)
 {
 	std::string tmp = mLexeme;
@@ -36,6 +43,8 @@ std::string BinopToken::GetLexeme(int type)
 		tmp = "append";
 	if(mLexeme == "^")
 		tmp = "**";
+	if(mLexeme == ":=")
+		tmp = "!";
 
 	if(type == Node::TYPE_FLOAT)
 	{

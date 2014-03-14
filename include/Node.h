@@ -37,11 +37,14 @@ private:
 	std::vector<Node*> mKids;
 	Node* mParent;
 	
-	void quickPost();
+	void quickPost(bool noRef = false);
 
 	//sets and returns the type of the branch at this node
 	//adds conversion nodes where necessary
 	eVarType recursiveProcess();
+
+	//declare an identifier
+	void declareID(eVarType type);
 
 	//type check for a binary operator
 	eVarType checkType(eVarType left, eVarType right);

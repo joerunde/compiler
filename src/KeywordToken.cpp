@@ -51,3 +51,12 @@ bool KeywordToken::isStdout()
 		return true;
 	return false;
 }
+
+std::string KeywordToken::GetLexeme(int type)
+{
+	if(isLet())
+	{
+		return "";
+	}
+	return mLexeme;
+}

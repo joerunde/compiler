@@ -55,6 +55,7 @@ class BlankToken: public Token
 {
 public:
 	BlankToken() : Token(""){}
+	BlankToken(std::string printmsg) : Token(printmsg){}
 	virtual std::string GetType() {return "";}
 	virtual Token* GetToken(std::string lexeme){return 0;}
 };
