@@ -1,0 +1,18 @@
+[
+	[let [[c int][d float][e string]]]
+	[:= c 0]
+	[while [< c 10]
+		[let [[a float] [b string]]]
+		[:= a [c]]
+		[:= a [sin[- a]]]
+		[:= d [* a d]]
+		[:= b "hi there "]
+		[:= e [+ b e]]
+		
+		
+		
+		[:= c [+ c 1]]
+	]
+
+
+]
