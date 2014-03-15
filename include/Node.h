@@ -15,6 +15,7 @@ public:
 
 	Node* addChild(Token* term);
 	Node* addChild(std::string nonterm);
+	Node* insertFrontChild(Token* term);
 
 	std::vector<Node*> getKids();
 	Node* getParent();

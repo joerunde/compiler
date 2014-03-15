@@ -369,6 +369,13 @@ Node* Node::addChild(std::string nonterm)
 	return tmp;
 }
 
+Node* Node::insertFrontChild(Token* term)
+{
+	Node* tmp = new Node(this, term);
+	mKids.insert(mKids.begin(), tmp);
+	return tmp;
+}
+
 std::vector<Node*> Node::getKids(){
 	return mKids;
 }

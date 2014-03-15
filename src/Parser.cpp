@@ -208,7 +208,27 @@ void Parser::Op(Node* node)
 		print(tmp);
 		mScanner->GetNextToken();
 		O(node->addChild("O"));
-		O(node->addChild("O"));
+		//let's handle the negative corner case
+		//right now the scanner should be set to return the next token after whatever
+		//expression comprised the first Operand. If there is no next operand though, and
+		//the operator was a minus sign, then we'll add in a zero child in front of the
+		//first operand
+		if(mScanner->PeekOneToken()->isRB() && tmp->GetLexeme() == "-")
+		{
+			node->insertFrontChild(new IntegerToken("0"));
+		}
+		else
+		{
+			O(node->addChild("O"));
+		}
+	}
+	else if(tmp->isConstant() || tmp->isID())
+	{
+		//not really in the grammar, but maybe somebody decides to do like [5] or [-5]
+		//or hell, even [var]
+		printmsg("O'-> Constant] | ID]");
+		node->addChild(tmp);
+		mScanner->GetNextToken();
 	}
 
 	//common to all productions
